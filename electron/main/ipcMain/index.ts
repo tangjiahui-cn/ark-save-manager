@@ -128,7 +128,6 @@ ipcMain.handle("rename-directory", async (_, params) => {
     return { success: false, errorMessage: "重命名目录名称不能为空" };
   }
   const newDirPath = path.resolve(dirPath, "..", newName);
-  console.log("zz -> ", newDirPath);
   if (fs.existsSync(newDirPath)) {
     fs.rmdirSync(newDirPath);
   }
