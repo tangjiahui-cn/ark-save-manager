@@ -22,7 +22,8 @@
   "dependencies": {
     "ahooks": "^3.9.0",
     "antd": "^4.24.14",
-    "electron-updater": "^6.3.9"
+    "electron-updater": "^6.3.9",
+    "path-browserify-esm": "^1.0.6"
   },
   "devDependencies": {
     "@antfu/ni": "^25.0.0",

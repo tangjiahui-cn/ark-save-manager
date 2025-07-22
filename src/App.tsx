@@ -2,7 +2,7 @@ import { Button, Empty, message, Popconfirm, Space, Switch } from "antd";
 import React from "react";
 import * as invoke from "@/ipcRenderer/invoke";
 import dayjs from "dayjs";
-import path from "path-browserify";
+import path from "path-browserify-esm";
 import { useRequest } from "ahooks";
 
 interface ArchivesData {
@@ -29,6 +29,7 @@ function App() {
       // 创建备份存档存储目录
       const dirname = `${dayjs().format("YYYYMMDD_HHmmss")}_ARK`;
       const saveDirPath = path.resolve(config.saveDir, dirname);
+      console.log('save', saveDirPath)
       await invoke.copyDirectoryContentToDirectory(
         config.sourceDir,
         saveDirPath,
