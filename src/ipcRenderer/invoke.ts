@@ -68,7 +68,36 @@ export async function deleteDirectory(dirPath: string): Promise<void> {
  * @param dirPath 清空目标目录绝对地址
  */
 export async function emptyDirectory(dirPath: string): Promise<void> {
+  if (!dirPath) return;
   return window.ipcRenderer.invoke("empty-directory", {
     dirPath,
+  });
+}
+
+/**
+ * 打开文件夹
+ */
+export async function openDirectory(dirPath: string): Promise<void> {
+  if (!dirPath) return;
+  return window.ipcRenderer.invoke("open-directory", {
+    dirPath,
+  });
+}
+
+/**
+ * 移动目录
+ * @param dirPath 源目录地址
+ * @param newName 重命名名称
+ */
+export async function renameDirectory(
+  dirPath: string,
+  newName: string,
+): Promise<{
+  success: boolean;
+  errorMessage: string | null;
+}> {
+  return window.ipcRenderer.invoke("rename-directory", {
+    dirPath,
+    newName,
   });
 }

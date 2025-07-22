@@ -1,4 +1,4 @@
-import { ipcMain, dialog } from "electron";
+import { ipcMain, dialog, shell } from "electron";
 import fs from "fs-extra";
 import path from "node:path";
 
@@ -101,4 +101,39 @@ ipcMain.handle("empty-directory", async (_, params) => {
   const { dirPath } = params;
   if (!isExistDirectory(dirPath)) return;
   return fs.emptyDirSync(dirPath);
+});
+
+/**
+ * 打开文件夹
+ */
+ipcMain.handle("open-directory", async (_, params) => {
+  const { dirPath } = params;
+  await shell.openPath(dirPath);
+});
+
+/**
+ * 重命名目录名称（会删除目标目录，直接移动目录）
+ */
+ipcMain.handle("rename-directory", async (_, params) => {
+  const {
+    // 目录地址
+    dirPath,
+    // 重命名目录名称
+    newName,
+  } = params;
+  if (!isExistDirectory(dirPath)) {
+    return { success: false, errorMessage: "源目录不存在" };
+  }
+  if (!newName) {
+    return { success: false, errorMessage: "重命名目录名称不能为空" };
+  }
+  const newDirPath = path.resolve(dirPath, "..", newName);
+  console.log("zz -> ", newDirPath);
+  if (fs.existsSync(newDirPath)) {
+    fs.rmdirSync(newDirPath);
+  }
+  fs.moveSync(dirPath, newDirPath, {
+    overwrite: true,
+  });
+  return { success: true, errorMessage: null };
 });
