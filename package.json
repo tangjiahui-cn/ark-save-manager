@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "ahooks": "^3.9.0",
-    "antd": "^4.24.14",
+    "antd": "^5.26.6",
     "electron-updater": "^6.3.9",
     "path-browserify-esm": "^1.0.6"
   },
