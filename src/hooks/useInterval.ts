@@ -22,6 +22,7 @@ export function useInterval(cb: IntervalCallback, delay: number = 1000) {
       return;
     }
     clearInterval(timerIdRef.current);
+    timerIdRef.current = undefined;
   }
 
   React.useEffect(() => {

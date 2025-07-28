@@ -2,6 +2,7 @@ import { Button, Tooltip } from "antd";
 import React from "react";
 import styles from "./index.module.less";
 import { useLoadingText } from "@/hooks/useLoadingText";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface ChooseDirectoryLineProps {
   // 选择文本
@@ -22,12 +23,13 @@ export default function ChooseDirectoryLine(props: ChooseDirectoryLineProps) {
     input.click();
   }
 
-  React.useEffect(() => {
+  // 自动搜索目录
+  function handleAutoSearch() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 3000);
-  }, []);
+  }
 
   return (
     <div className={styles.chooseDirectoryLine}>
@@ -37,6 +39,18 @@ export default function ChooseDirectoryLine(props: ChooseDirectoryLineProps) {
         </Button>
       </Tooltip>
       <div className={styles.chooseDirectoryLine_text}>{loadingText}</div>
+
+      {/* 自动搜索目录 */}
+      {enableAutoSearch && (
+        <Tooltip title={`自动搜索目录`} placement={"left"}>
+          <Button
+            style={{ borderRadius: 0, marginLeft: -1, width: 36 }}
+            onClick={handleAutoSearch}
+          >
+            {loadingText ? <LoadingOutlined /> : "A"}
+          </Button>
+        </Tooltip>
+      )}
     </div>
   );
 }

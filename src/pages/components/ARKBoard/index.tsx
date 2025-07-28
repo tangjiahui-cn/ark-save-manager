@@ -100,20 +100,14 @@ export default () => {
   }, []);
 
   return (
-    <Space direction={"vertical"} className={styles.arkBoard}>
+    <Space direction={"vertical"} className={styles.arkBoard} size={12}>
       <Space direction={"vertical"} className={styles.arkBoard_block}>
         <ChooseDirectoryLine buttonText={"存档目录"} enableAutoSearch />
         <ChooseDirectoryLine buttonText={"备份目录"} enableAutoSearch />
       </Space>
 
-      <div
-        style={{
-          display: "flex",
-          padding: "12px 0",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className={styles.flex_line}>
+        <b>备份列表：</b>
         <Space>
           <Button
             type={"primary"}
@@ -127,25 +121,7 @@ export default () => {
         </Space>
       </div>
 
-      <div className={styles.flex_line}>
-        <b>备份列表：</b>
-        <Space>
-          <Select
-            defaultValue={"1"}
-            style={{ width: 80 }}
-            options={[
-              { label: "手动", value: "1" },
-              { label: "自动", value: "2" },
-            ]}
-          />
-          <Input.Search
-            style={{ maxWidth: 300, minWidth: 250 }}
-            placeholder={"输入标题/创建日期搜索"}
-          />
-        </Space>
-      </div>
       <Table
-        bordered
         size={"small"}
         dataSource={Array(3).fill({})}
         columns={columns}
