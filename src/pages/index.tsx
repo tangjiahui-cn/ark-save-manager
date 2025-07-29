@@ -3,20 +3,20 @@
  *
  * @description
  * 功能描述：
- * 1、手动创建存档
- * 2、定时备份存档
- * 3、备份存档支持操作（切换、删除、重命名、复制）
+ * 1、备份存档
+ * 2、使用、部分使用、删除、重命名、复制
  */
 import React from "react";
 import styles from "./index.module.less";
 import ARKBoard from "./components/ARKBoard";
 import { ConfigProvider, Menu } from "antd";
 import zh_CN from "antd/locale/zh_CN";
+import { SettingOutlined } from "@ant-design/icons";
 
 const menuList = [
-  { label: "ARK1", key: "ase" },
-  { label: "ARK2", key: "asa" },
-  { label: "设置", key: "settings" },
+  { label: "方舟进化", key: "ase", icon: <SettingOutlined /> },
+  { label: "方舟飞升", key: "asa", icon: <SettingOutlined /> },
+  { label: "设置", key: "settings", icon: <SettingOutlined /> },
 ];
 
 export default function App() {

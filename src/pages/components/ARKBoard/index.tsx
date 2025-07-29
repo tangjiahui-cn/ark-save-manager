@@ -1,21 +1,11 @@
 import React from "react";
 import styles from "./index.module.less";
-import {
-  Button,
-  Input,
-  message,
-  Modal,
-  Select,
-  Space,
-  Table,
-  Tooltip,
-} from "antd";
+import { Button, message, Modal, Space, Table, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ChooseDirectoryLine from "@/components/ChooseDirectoryLine";
 import { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import { useCreateArchivesDialog } from "@/components/CreateArchivesDialog";
-import { useScheduledArchives } from "@/components/ScheduledArchivesDialog";
 
 export default () => {
   const columns: ColumnsType<any> = [
@@ -53,11 +43,16 @@ export default () => {
     {
       title: "操作",
       width: 250,
-      render() {
+      render(record) {
         return (
           <Space>
             <Button size={"small"}>应用</Button>
-            <Button size={"small"}>编辑</Button>
+            <Button
+              size={"small"}
+              onClick={() => handleOperate("edit", record)}
+            >
+              编辑
+            </Button>
             <Button size={"small"}>复制</Button>
             <Button size={"small"} danger>
               删除
@@ -75,12 +70,16 @@ export default () => {
     },
   });
 
-  // 定时备份设置
-  const scheduledArchives = useScheduledArchives({
-    onOk() {
-      // ...
-    },
-  });
+  function handleOperate(opt: "add" | "edit", record?: any) {
+    switch (opt) {
+      case "add":
+      case "edit":
+        createArchivesDialog.open({
+          record,
+        });
+        break;
+    }
+  }
 
   function handleClearAll() {
     Modal.confirm({
@@ -112,24 +111,23 @@ export default () => {
           <Button
             type={"primary"}
             icon={<PlusOutlined />}
-            onClick={() => createArchivesDialog.open()}
+            onClick={() => handleOperate("add")}
           >
             创建新存档
           </Button>
           <Button onClick={handleClearAll}>清空备份</Button>
-          <Button onClick={() => scheduledArchives.open()}>定时备份</Button>
         </Space>
       </div>
 
       <Table
         size={"small"}
         dataSource={Array(3).fill({})}
+        style={{ border: "1px solid #ededed" }}
         columns={columns}
         pagination={false}
       />
 
       {createArchivesDialog.children}
-      {scheduledArchives.children}
     </Space>
   );
 };
